@@ -94,6 +94,74 @@ export default {
         }       
     )
     axios.interceptors.request.eject(interceptors);
+    let instance = axios.create({});
+    instance.interceptors.request.use(
+        config => {
+            config.headers.token = '';
+            return config;
+        }
+    )
+    let instance_phone = axios.create({});
+    instance_phone.interceptors.request.use(
+        config => {
+            $('#model').show();
+            return config;
+        }
+    )
+    instance_phone.interceptors.response.use(
+        res => {
+            $('#model').hide();
+            return res;
+        }
+    )
+
+    // 错误处理
+    axios.interceptros.request.use (
+        config => {
+            return config;
+        }
+    ), err => {
+        return Promise.reject(err);
+    }
+    axios.interceptors.response.use(
+        res => {
+            return res
+        }
+    ), err => {
+        return Promise.reject(err);
+    }
+
+    axios.get('/data.json').then( res => {
+        console.log(res);
+    }).catch (err => {
+        console.log(err);
+    })
+
+    let inst = axios.create({})
+    inst.interceptors.request(
+        config => {
+            return config;
+        }, err => {
+            // 请求错误： http401超时 404
+            $('#model').show();
+            setTimeout(() => {
+                $('#model').hide();
+            }, 2000)
+            return Promise.reject(err);
+        }
+    )
+    inst.interceptors.reponse.use (
+        res => {
+            return res;
+        }, err => {
+            // 响应错误： http 500系统错误 502系统重启
+            $('#model').show();
+            setTimeout(() => {
+                $('#model').hide();
+            }, 2000)
+            return Promise.reject(err);
+        }
+    )
   }
 }
 </script>
