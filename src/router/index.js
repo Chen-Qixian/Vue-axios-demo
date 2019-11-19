@@ -21,6 +21,10 @@ const routes = [
   {
     path: '/axiosMethod',
     component: () => import('../views/axiosMethod.vue')
+  },
+  {
+    path: '/instanceMethod',
+    component: () => import('../views/instanceMethod.vue')
   }
 ]
 
