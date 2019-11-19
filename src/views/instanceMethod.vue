@@ -162,6 +162,17 @@ export default {
             return Promise.reject(err);
         }
     )
+
+    let source = axios.CancelToken.source();
+    axios.get('/data.json', {
+        cancelToken: source.token
+    }).then(res => {
+        console.log(res);
+    }).catch(err => {
+        console.log(err);
+    })
+
+    source.cancel('cancel http');
   }
 }
 </script>
